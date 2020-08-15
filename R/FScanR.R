@@ -2,11 +2,12 @@
 ##'
 ##'
 ##' @title FScanR
-##' @param blastx_output: Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
+##' @param blastx_output Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
 ##' -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'  -max_target_seqs 1
-##' @param evalue_cutoff: Threshold of E-value for BLASTX hits, default 1e-5
-##' @param frameDist_cutoff: Threshold for gap size (bp) to detect frameshifting between BLASTX hits of same mRNA/cDNA sequence, default 10
+##' @param evalue_cutoff Threshold of E-value for BLASTX hits, default 1e-5
+##' @param frameDist_cutoff Threshold for gap size (bp) to detect frameshifting between BLASTX hits of same mRNA/cDNA sequence, default 10
 ##' @return dataframe
+##' @importFrom stats complete.cases
 ##' @export 
 ##' @author Xiao Chen
 ##' @references 1. X Chen, Y Jiang, F Gao, W Zheng, TJ Krock, NA Stover, C Lu, LA Katz & W Song (2019). 
@@ -14,10 +15,10 @@
 ##' to environmental stressors. Molecular Ecology Resources, 19(5):1292-1308. 
 ##' <https://doi.org/10.1111/1755-0998.13023>
 ##' @examples
-##' FScanR(test_data)
+##' FScanR(FScanR:::test_data)
 
 ## Main
-FScanR <- function(blastx_output    = test_data, 
+FScanR <- function(blastx_output    = FScanR:::test_data, 
 				   evalue_cutoff    = 1e-5, 
 				   frameDist_cutoff = 10
 				   ) {
@@ -25,25 +26,13 @@ FScanR <- function(blastx_output    = test_data,
 	blastx <- blastx_output
 	colnames(blastx) <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen", "qstart", "qend", "sstart", "send", "evalue", "bitscore", "qframe", "sframe")
 	blastx <- blastx[complete.cases(blastx) & blastx$evalue <= evalue_cutoff,,drop=F]
-	head(blastx,10)
-	dim(blastx)
-	# 38549    14
 
 	blastx_freq <- table(blastx$qseqid)
 	blastx_freq_cutoff <- blastx_freq[blastx_freq > 1]
-	head(blastx_freq_cutoff,10)
-	length(blastx_freq_cutoff)
-	# 5706
 
 	blastx_cutoff <- blastx[blastx$qseqid %in% names(blastx_freq_cutoff),,drop=F]
-	head(blastx_cutoff,10)
-	dim(blastx_cutoff)
-	# 14044    14
 
 	blastx_cutoff_sort <- blastx_cutoff[order(blastx_cutoff$qseqid, blastx_cutoff$qstart),]
-	head(blastx_cutoff_sort,10)
-	dim(blastx_cutoff_sort)
-	# 14044    14
 
 	prf <- data.frame()
 	for (i in 2:nrow(blastx_cutoff_sort)) {

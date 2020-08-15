@@ -5,18 +5,18 @@
 \title{FScanR}
 \usage{
 FScanR(
-    blastx_output, 
-    evalue_cutoff    = 1e-5, 
-    frameDist_cutoff = 10
+  blastx_output = FScanR:::test_data,
+  evalue_cutoff = 1e-05,
+  frameDist_cutoff = 10
 )
 }
 \arguments{
-\item{blastx_output:}{Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
+\item{blastx_output}{Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'  -max_target_seqs 1}
 
-\item{evalue_cutoff:}{Threshold of E-value for BLASTX hits, default 1e-5}
+\item{evalue_cutoff}{Threshold of E-value for BLASTX hits, default 1e-5}
 
-\item{frameDist_cutoff:}{Threshold for gap size (bp) to detect frameshifting between BLASTX hits of same mRNA/cDNA sequence, default 10}
+\item{frameDist_cutoff}{Threshold for gap size (bp) to detect frameshifting between BLASTX hits of same mRNA/cDNA sequence, default 10}
 }
 \value{
 dataframe
@@ -25,7 +25,7 @@ dataframe
 Identifies Programmed Ribosomal Frameshifting (PRF) events from mRNA/cDNA BLASTX output
 }
 \examples{
-FScanR(test_data)
+FScanR(FScanR:::test_data)
 }
 \references{
 1. X Chen, Y Jiang, F Gao, W Zheng, TJ Krock, NA Stover, C Lu, LA Katz & W Song (2019). 

@@ -14,9 +14,9 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
-Imports:
-Suggests: rmarkdown, stats
+Imports: stats
+Suggests: rmarkdown
 biocViews: Alignment, Annotation, Software
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-08-15 21:24:44 UTC; alpha
+Packaged: 2020-08-15 22:01:16 UTC; alpha
