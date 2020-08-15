@@ -1,6 +1,6 @@
 # FScanR: an R package to detect Programmed Ribosomal Frameshifting (PRF) events from mRNA/cDNA
 
-<a href="https://doi.org/10.1111/1755-0998.13023"><img src="docs/schematic.png" height="150" align="center" /></a>
+<a href="https://doi.org/10.1111/1755-0998.13023"><img src="docs/schematic.png" height="100" align="center" /></a>
 
 [![](https://img.shields.io/badge/release%20version-1.0.0-green.svg)](https://github.com/seanchen607/FScanR)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -16,7 +16,7 @@ For details, please visit <https://doi.org/10.1111/1755-0998.13023>.
 
 ## :sparkling\_heart: What is Programmed Ribosomal Frameshifting (PRF)?
 
-<a href="https://doi.org/10.1016/j.febslet.2013.03.002"><img src="docs/Structural-diversity-within-programmed-ribosomal-frameshifting-elements-A-Schematic_W640.png" height="200" align="center" /></a>
+<a href="https://doi.org/10.1016/j.febslet.2013.03.002"><img src="docs/Structural-diversity-within-programmed-ribosomal-frameshifting-elements-A-Schematic_W640.png" height="400" align="center" /></a>
 - From [*Mauger et al., 2013, FEBS Letters*] (https://doi.org/10.1016/j.febslet.2013.03.002)
 
 Ribosomal frameshifting, also known as translational frameshifting or translational recoding, is a biological phenomenon 
