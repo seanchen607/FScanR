@@ -32,7 +32,7 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
 
 	blastx_cutoff <- blastx[blastx$qseqid %in% names(blastx_freq_cutoff),,drop=F]
 
-	blastx_cutoff_sort <- blastx_cutoff[order(blastx_cutoff$qseqid, blastx_cutoff$qstart),]
+	blastx_cutoff_sort <- blastx_cutoff[order(blastx_cutoff$qseqid, blastx_cutoff$sseqid, blastx_cutoff$qstart),]
 
 	prf <- data.frame()
 	for (i in 2:nrow(blastx_cutoff_sort)) {
