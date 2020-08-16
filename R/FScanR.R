@@ -53,14 +53,13 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
 
 		if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0) {
 			if (qframe > 0 & qframe_last > 0) {
-				qDist <- qstart - qend_last - 1
-				frameStart <- qend_last + 1
-				frameEnd <- qstart - 1
+				frameStart <- qend_last
+				frameEnd <- qstart
 			} else if (qframe < 0 & qframe_last < 0) {
-				qDist <- qend - qstart_last - 1
-				frameStart <- qstart_last + 1
-				frameEnd <- qend - 1
+				frameStart <- qstart_last
+				frameEnd <- qend
 			}
+			qDist <- frameEnd - frameStart - 1
 			sDist <- sstart - send_last
 			qframe_last <- ifelse(qframe_last %in% c(-3, 3), 0, qframe_last)
 			qframe <- ifelse(qframe %in% c(-3, 3), 0, qframe)
