@@ -1,7 +1,6 @@
 Package: FScanR
 Type: Package
-Title: Detect Programmed Ribosomal Frameshifting Events from mRNA/cDNA
-        BLASTX Output
+Title: Detect Programmed Ribosomal Frameshifting Events from mRNA/cDNA BLASTX Output
 Version: 1.0.0
 Author: Xiao Chen
 Authors@R: c(
@@ -9,14 +8,15 @@ Authors@R: c(
        )
 Maintainer: Xiao Chen <seanchen607@gmail.com>
 Description: 'FScanR' identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX output in tab format containing the best hits (peptide sequence) of targeted mRNA/cDNA sequences.
-    BLASTX parameters required: -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'  -max_target_seqs 1.
+    BLASTX parameters required: -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.5.0)
-Imports: stats
-Suggests: rmarkdown
+Depends:
+    R (>= 3.5.0)
+Imports:
+    stats
+Suggests:
+    rmarkdown
 biocViews: Alignment, Annotation, Software
 RoxygenNote: 7.1.1
-NeedsCompilation: no
-Packaged: 2020-08-15 22:01:16 UTC; alpha

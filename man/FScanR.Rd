@@ -12,7 +12,7 @@ FScanR(
 }
 \arguments{
 \item{blastx_output}{Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
--outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'  -max_target_seqs 1}
+-outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'}
 
 \item{evalue_cutoff}{Threshold of E-value for BLASTX hits, default 1e-5}
 
