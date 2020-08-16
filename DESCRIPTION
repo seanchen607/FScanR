@@ -8,7 +8,7 @@ Authors@R: c(
        )
 Maintainer: Xiao Chen <seanchen607@gmail.com>
 Description: 'FScanR' identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX output in tab format containing the best hits (peptide sequence) of targeted mRNA/cDNA sequences.
-    BLASTX parameters required: -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'
+    BLASTX parameters required: -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
