@@ -63,8 +63,8 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
 			sDist <- sstart - send_last
 			qframe_last <- ifelse(qframe_last %in% c(-3, 3), 0, qframe_last)
 			qframe <- ifelse(qframe %in% c(-3, 3), 0, qframe)
-			FS_type <- qframe - qframe_last
-			if (qDist & sDist > 0 & qDist <= frameDist_cutoff & sDist <= floor(frameDist_cutoff/3)) {
+			FS_type <- qDist + (1 - sDist) * 3
+			if (qDist & qDist <= frameDist_cutoff & sDist <= floor(frameDist_cutoff/3)) {
 				prf_sub <- data.frame(as.character(qseqid), frameStart, frameEnd, as.character(sseqid), send_last + 1, sstart, FS_type)
 				prf <- rbind(prf, prf_sub)
 			}
