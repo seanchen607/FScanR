@@ -1,6 +1,6 @@
 # FScanR: an R package to detect Programmed Ribosomal Frameshifting (PRF) events from mRNA/cDNA
 
-[![](https://img.shields.io/badge/release%20version-1.0.0-green.svg)](https://github.com/seanchen607/FScanR)
+[![](https://img.shields.io/badge/release%20version-0.99.0-green.svg)](https://github.com/seanchen607/FScanR)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
 ‘FScanR’ identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX output 
