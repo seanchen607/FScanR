@@ -15,6 +15,12 @@ To acquire the input file with 14 columns in tab-delimited format, which is gene
 
 For details, please visit <https://doi.org/10.1111/1755-0998.13023>.
 
+## :gear: Install FScanR in R (>= 3.5.0)
+
+	library(devtools)
+	install_github("seanchen607/FScanR")
+	library(FScanR)
+
 ## :sparkling\_heart: What is Programmed Ribosomal Frameshifting (PRF)?
 
 <a href="https://doi.org/10.1016/j.febslet.2013.03.002"><img src="docs/Structural-diversity-within-programmed-ribosomal-frameshifting-elements-A-Schematic_W640.png" height="400" align="center" /></a>
