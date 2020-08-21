@@ -33,7 +33,7 @@ It has been described mainly in viruses (especially retroviruses), retrotranspos
 
 For details, please visit [Ribosomal frameshift](https://en.wikipedia.org/wiki/Ribosomal_frameshift).
 
-## :writing\_hand: Authors
+## :pencil2: Authors
 
 Xiao CHEN, PhD
 
