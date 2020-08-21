@@ -21,7 +21,7 @@ For details, please visit <https://doi.org/10.1111/1755-0998.13023>.
 	install_github("seanchen607/FScanR")
 	library(FScanR)
 
-## :sparkling\_heart: What is Programmed Ribosomal Frameshifting (PRF)?
+## :orange_book: What is Programmed Ribosomal Frameshifting (PRF)?
 
 <a href="https://doi.org/10.1016/j.febslet.2013.03.002"><img src="docs/Structural-diversity-within-programmed-ribosomal-frameshifting-elements-A-Schematic_W640.png" height="400" align="center" /></a>
 - From [*Mauger et al., 2013, FEBS Letters*](https://doi.org/10.1016/j.febslet.2013.03.002)
