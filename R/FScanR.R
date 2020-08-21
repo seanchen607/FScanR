@@ -32,47 +32,50 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
 
 	blastx_cutoff <- blastx[blastx$qseqid %in% names(blastx_freq_cutoff),,drop=F]
 
-	blastx_cutoff_sort <- blastx_cutoff[order(blastx_cutoff$qseqid, blastx_cutoff$sseqid, blastx_cutoff$qstart),]
+	blastx_cutoff_sort <- blastx_cutoff[order(blastx_cutoff$qseqid, blastx_cutoff$sseqid, blastx_cutoff$qstart),,drop=F]
 
 	prf <- data.frame()
-	for (i in 2:nrow(blastx_cutoff_sort)) {
-		qseqid <- blastx_cutoff_sort[i,1]
-		sseqid <- blastx_cutoff_sort[i,2]
-		qstart <- blastx_cutoff_sort[i,7]
-		qend <- blastx_cutoff_sort[i,8]
-		sstart <- blastx_cutoff_sort[i,9]
-		send <- blastx_cutoff_sort[i,10]
-		qframe <- blastx_cutoff_sort[i,13]
-		qseqid_last <- blastx_cutoff_sort[i-1,1]
-		sseqid_last <- blastx_cutoff_sort[i-1,2]
-		qstart_last <- blastx_cutoff_sort[i-1,7]
-		qend_last <- blastx_cutoff_sort[i-1,8]
-		sstart_last <- blastx_cutoff_sort[i-1,9]
-		send_last <- blastx_cutoff_sort[i-1,10]
-		qframe_last <- blastx_cutoff_sort[i-1,13]
+	if (nrow(blastx_cutoff_sort) > 0) {
+		for (i in 2:nrow(blastx_cutoff_sort)) {
+			qseqid <- blastx_cutoff_sort[i,1]
+			sseqid <- blastx_cutoff_sort[i,2]
+			qstart <- blastx_cutoff_sort[i,7]
+			qend <- blastx_cutoff_sort[i,8]
+			sstart <- blastx_cutoff_sort[i,9]
+			send <- blastx_cutoff_sort[i,10]
+			qframe <- blastx_cutoff_sort[i,13]
+			qseqid_last <- blastx_cutoff_sort[i-1,1]
+			sseqid_last <- blastx_cutoff_sort[i-1,2]
+			qstart_last <- blastx_cutoff_sort[i-1,7]
+			qend_last <- blastx_cutoff_sort[i-1,8]
+			sstart_last <- blastx_cutoff_sort[i-1,9]
+			send_last <- blastx_cutoff_sort[i-1,10]
+			qframe_last <- blastx_cutoff_sort[i-1,13]
 
-		if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0) {
-			if (qframe > 0 & qframe_last > 0) {
-				frameStart <- qend_last
-				frameEnd <- qstart
-			} else if (qframe < 0 & qframe_last < 0) {
-				frameStart <- qstart_last
-				frameEnd <- qend
+			if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0) {
+				if (qframe > 0 & qframe_last > 0) {
+					frameStart <- qend_last
+					frameEnd <- qstart
+				} else if (qframe < 0 & qframe_last < 0) {
+					frameStart <- qstart_last
+					frameEnd <- qend
+				}
+				qDist <- frameEnd - frameStart - 1
+				sDist <- sstart - send_last
+				qframe_last <- ifelse(qframe_last %in% c(-3, 3), 0, qframe_last)
+				qframe <- ifelse(qframe %in% c(-3, 3), 0, qframe)
+				FS_type <- qDist + (1 - sDist) * 3
+				if (qDist >= frameDist_cutoff * (-1) & qDist <= frameDist_cutoff & sDist <= floor(frameDist_cutoff/3) & sDist >= floor(frameDist_cutoff/3) * (-1)) {
+					prf_sub <- data.frame(as.character(qseqid), frameStart, frameEnd, as.character(sseqid), send_last + 1, sstart, FS_type)
+					prf <- rbind(prf, prf_sub)
+				}
+				prf <- prf[prf$FS_type < 3 & prf$FS_type > -3,,drop=F]
 			}
-			qDist <- frameEnd - frameStart - 1
-			sDist <- sstart - send_last
-			qframe_last <- ifelse(qframe_last %in% c(-3, 3), 0, qframe_last)
-			qframe <- ifelse(qframe %in% c(-3, 3), 0, qframe)
-			FS_type <- qDist + (1 - sDist) * 3
-			if (qDist >= frameDist_cutoff * (-1) & qDist <= frameDist_cutoff & sDist <= floor(frameDist_cutoff/3) & sDist >= floor(frameDist_cutoff/3) * (-1)) {
-				prf_sub <- data.frame(as.character(qseqid), frameStart, frameEnd, as.character(sseqid), send_last + 1, sstart, FS_type)
-				prf <- rbind(prf, prf_sub)
-			}
-			prf <- prf[prf$FS_type < 3 & prf$FS_type > -3,,drop=F]
 		}
+		colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
+	} else {
+		message("No PRF events detected!")
 	}
-	colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
 	
 	return(prf)
 }
-
