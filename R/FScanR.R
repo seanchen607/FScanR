@@ -25,14 +25,14 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
 
     blastx <- blastx_output
     colnames(blastx) <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen", "qstart", "qend", "sstart", "send", "evalue", "bitscore", "qframe", "sframe")
-    blastx <- blastx[complete.cases(blastx) & blastx$evalue <= evalue_cutoff,,drop=F]
+    blastx <- blastx[complete.cases(blastx) & blastx$evalue <= evalue_cutoff,,drop=FALSE]
 
     blastx_freq <- table(blastx$qseqid)
     blastx_freq_cutoff <- blastx_freq[blastx_freq > 1]
 
-    blastx_cutoff <- blastx[blastx$qseqid %in% names(blastx_freq_cutoff),,drop=F]
+    blastx_cutoff <- blastx[blastx$qseqid %in% names(blastx_freq_cutoff),,drop=FALSE]
 
-    blastx_cutoff_sort <- blastx_cutoff[order(blastx_cutoff$qseqid, blastx_cutoff$sseqid, blastx_cutoff$qstart),,drop=F]
+    blastx_cutoff_sort <- blastx_cutoff[order(blastx_cutoff$qseqid, blastx_cutoff$sseqid, blastx_cutoff$qstart),,drop=FALSE]
 
     prf <- data.frame()
     if (nrow(blastx_cutoff_sort) > 0) {
@@ -69,7 +69,7 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
                     prf_sub <- data.frame(as.character(qseqid), frameStart, frameEnd, as.character(sseqid), send_last + 1, sstart, FS_type)
                     prf <- rbind(prf, prf_sub)
                 }
-                prf <- prf[prf$FS_type < 3 & prf$FS_type > -3,,drop=F]
+                prf <- prf[prf$FS_type < 3 & prf$FS_type > -3,,drop=FALSE]
             }
         }
         colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
