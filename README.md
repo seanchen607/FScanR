@@ -23,7 +23,7 @@ For details, please visit <https://doi.org/10.1111/1755-0998.13023>.
 
 ## :orange_book: What is Programmed Ribosomal Frameshifting (PRF)?
 
-<a href="https://doi.org/10.1016/j.febslet.2013.03.002"><img src="docs/Structural-diversity-within-programmed-ribosomal-frameshifting-elements-A-Schematic_W640.png" height="400" align="center" /></a>
+<a href="https://doi.org/10.1016/j.febslet.2013.03.002"><img src="docs/Structural-diversity.png" height="400" align="center" /></a>
 - From [*Mauger et al., 2013, FEBS Letters*](https://doi.org/10.1016/j.febslet.2013.03.002)
 
 Ribosomal frameshifting, also known as translational frameshifting or translational recoding, is a biological phenomenon 
