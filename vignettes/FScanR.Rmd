@@ -39,7 +39,7 @@ Biocpkg <- function (pkg) {
 
 
 
-‘FScanR’ identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX output 
+'FScanR' identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX output 
 in tab format containing the best hits of targeted mRNA/cDNA sequences against 
 the peptide library of the same species or a close relative.
 
