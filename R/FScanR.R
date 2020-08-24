@@ -72,7 +72,9 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
                 prf <- prf[prf$FS_type < 3 & prf$FS_type > -3,,drop=FALSE]
             }
         }
-        colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
+        if (nrow(prf) > 0) {
+            colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
+        }
     } else {
         message("No PRF events detected!")
     }
