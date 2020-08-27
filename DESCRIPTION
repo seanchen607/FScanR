@@ -1,20 +1,26 @@
 Package: FScanR
 Type: Package
 Title: Detect Programmed Ribosomal Frameshifting Events from mRNA/cDNA BLASTX Output
-Version: 0.99.1
+Version: 0.99.3
 Authors@R: c(
        person("Xiao", "Chen", email = "seanchen607@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5059-8846"))
        )
-Description: 'FScanR' identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX output in tab format containing the best hits (peptide sequence) of targeted mRNA/cDNA sequences.
-    BLASTX parameters required: -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'.
+Description: 'FScanR' identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX homolog sequence alignment 
+    between targeted genomic/cDNA/mRNA sequences against the peptide library of the same species or a close relative. 
+    The output by BLASTX or diamond BLASTX will be used as input of 'FScanR' and should be in a tabular format with 14 columns. 
+    For BLASTX, the output parameter should be: -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'.
+    For diamond BLASTX, the output parameter should be: -outfmt 6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe qframe.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.0)
 Imports:
     stats
 Suggests:
-    rmarkdown
+    knitr,
+	rmarkdown
+VignetteBuilder: knitr
+BugReports: https://github.com/seanchen607/FScanR/issues
 biocViews: Alignment, Annotation, Software
 RoxygenNote: 7.1.1

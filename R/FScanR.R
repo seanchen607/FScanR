@@ -1,11 +1,18 @@
-##' Identifies Programmed Ribosomal Frameshifting (PRF) events from mRNA/cDNA BLASTX output
+##' 'FScanR' identifies Programmed Ribosomal Frameshifting (PRF) events from BLASTX homolog sequence alignment 
+##' between targeted genomic/cDNA/mRNA sequences against the peptide library of the same species or a close relative. 
+##'
+##' The output by BLASTX or diamond BLASTX will be used as input of 'FScanR' and should be in a tabular format with 14 columns. 
+##'
+##' For BLASTX, the output parameter should be: -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'. 
+##'
+##' For diamond BLASTX, the output parameter should be: -outfmt 6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe qframe. 
 ##'
 ##'
 ##' @title FScanR
 ##' @param blastx_output Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
 ##' -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'  -max_target_seqs 1
 ##' @param evalue_cutoff Threshold of E-value for BLASTX hits, default 1e-5
-##' @param frameDist_cutoff Threshold for gap size (bp) to detect frameshifting between BLASTX hits of same mRNA/cDNA sequence, default 10
+##' @param frameDist_cutoff Threshold for gap size (bp) to detect frameshifting between BLASTX hits of same mRNA/cDNA sequence, default 10 (nt)
 ##' @return dataframe
 ##' @importFrom stats complete.cases
 ##' @export 
@@ -15,7 +22,8 @@
 ##' to environmental stressors. Molecular Ecology Resources, 19(5):1292-1308. 
 ##' <https://doi.org/10.1111/1755-0998.13023>
 ##' @examples
-##' FScanR(FScanR:::test_data)
+##' test_data <- read.table(system.file("extdata", "test.tab", package = "FScanR"), header=TRUE, sep="\t")
+##' FScanR(test_data)
 
 ## Main
 FScanR <- function(blastx_output    = FScanR:::test_data, 
@@ -74,6 +82,11 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
         }
         if (nrow(prf) > 0) {
             colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
+            prf$loci1 = paste(prf$DNA_seqid, prf$FS_start, sep="_")
+            prf$loci2 = paste(prf$DNA_seqid, prf$FS_end, sep="_")
+            prf = prf[!duplicated(prf$loci1),,drop=F]
+            prf = prf[!duplicated(prf$loci2),,drop=F]
+            prf = prf[,!colnames(prf) %in% c("loci1", "loci2"),drop=F]
         }
     } else {
         message("No PRF events detected!")
