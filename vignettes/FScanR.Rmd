@@ -84,7 +84,7 @@ output by BLASTX, from [_Chen et al., 2019_](https://doi.org/10.1111/1755-0998.1
 ## loading package
 library(FScanR)
 ## loading test data
-test_data <- read.table(system.file("extdata", "test.tab", package = "FScanR"), header=T, sep="\t")
+test_data <- read.table(system.file("extdata", "test.tab", package = "FScanR"), header=TRUE, sep="\t")
 ```
 
 ## PRF events detection

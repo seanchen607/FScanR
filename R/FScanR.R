@@ -84,9 +84,9 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
             colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
             prf$loci1 = paste(prf$DNA_seqid, prf$FS_start, sep="_")
             prf$loci2 = paste(prf$DNA_seqid, prf$FS_end, sep="_")
-            prf = prf[!duplicated(prf$loci1),,drop=F]
-            prf = prf[!duplicated(prf$loci2),,drop=F]
-            prf = prf[,!colnames(prf) %in% c("loci1", "loci2"),drop=F]
+            prf = prf[!duplicated(prf$loci1),,drop=FALSE]
+            prf = prf[!duplicated(prf$loci2),,drop=FALSE]
+            prf = prf[,!colnames(prf) %in% c("loci1", "loci2"),drop=FALSE]
         }
     } else {
         message("No PRF events detected!")
