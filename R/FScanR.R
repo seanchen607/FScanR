@@ -10,7 +10,8 @@
 ##'
 ##' @title FScanR
 ##' @param blastx_output Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
-##' -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'  -max_target_seqs 1
+##' -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'
+##' @param mismatch_cutoff Threshold of number of mismatches for BLASTX hits, default 5 (aa)
 ##' @param evalue_cutoff Threshold of E-value for BLASTX hits, default 1e-5
 ##' @param frameDist_cutoff Threshold for gap size (bp) to detect frameshifting between BLASTX hits of same mRNA/cDNA sequence, default 10 (nt)
 ##' @return dataframe
@@ -26,8 +27,9 @@
 ##' FScanR(test_data)
 
 ## Main
-FScanR <- function(blastx_output    = FScanR:::test_data, 
-                   evalue_cutoff    = 1e-5, 
+FScanR <- function(blastx_output, 
+                   mismatch_cutoff  = 5,
+                   evalue_cutoff    = 1e-5,
                    frameDist_cutoff = 10
                    ) {
 
@@ -45,6 +47,7 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
     prf <- data.frame()
     if (nrow(blastx_cutoff_sort) > 0) {
         for (i in 2:nrow(blastx_cutoff_sort)) {
+            mismatch <- blastx_cutoff_sort[i,5]
             qseqid <- blastx_cutoff_sort[i,1]
             sseqid <- blastx_cutoff_sort[i,2]
             qstart <- blastx_cutoff_sort[i,7]
@@ -60,16 +63,20 @@ FScanR <- function(blastx_output    = FScanR:::test_data,
             send_last <- blastx_cutoff_sort[i-1,10]
             qframe_last <- blastx_cutoff_sort[i-1,13]
 
-            if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0) {
+            if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0 & mismatch < mismatch_cutoff) {
                 if (qframe > 0 & qframe_last > 0) {
                     frameStart <- qend_last
                     frameEnd <- qstart
+                    pepStart <- send_last
+                    pepEnd <- sstart
                 } else if (qframe < 0 & qframe_last < 0) {
                     frameStart <- qstart_last
                     frameEnd <- qend
+                    pepStart <- send
+                    pepEnd <- sstart_last
                 }
                 qDist <- frameEnd - frameStart - 1
-                sDist <- sstart - send_last
+                sDist <- pepEnd - pepStart
                 qframe_last <- ifelse(qframe_last %in% c(-3, 3), 0, qframe_last)
                 qframe <- ifelse(qframe %in% c(-3, 3), 0, qframe)
                 FS_type <- qDist + (1 - sDist) * 3

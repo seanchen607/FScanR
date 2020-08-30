@@ -5,14 +5,17 @@
 \title{FScanR}
 \usage{
 FScanR(
-  blastx_output = FScanR:::test_data,
+  blastx_output,
+  mismatch_cutoff = 5,
   evalue_cutoff = 1e-05,
   frameDist_cutoff = 10
 )
 }
 \arguments{
 \item{blastx_output}{Input file with 14 columns in tab-delimited format, output from BLASTX using parameters: 
--outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'  -max_target_seqs 1}
+-outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'}
+
+\item{mismatch_cutoff}{Threshold of number of mismatches for BLASTX hits, default 5 (aa)}
 
 \item{evalue_cutoff}{Threshold of E-value for BLASTX hits, default 1e-5}
 
