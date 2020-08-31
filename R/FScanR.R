@@ -35,7 +35,7 @@ FScanR <- function(blastx_output,
 
     blastx <- blastx_output
     colnames(blastx) <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen", "qstart", "qend", "sstart", "send", "evalue", "bitscore", "qframe", "sframe")
-    blastx <- blastx[complete.cases(blastx) & blastx$evalue <= evalue_cutoff,,drop=FALSE]
+    blastx <- blastx[complete.cases(blastx) & blastx$evalue <= evalue_cutoff & blastx$mismatch <= mismatch_cutoff,,drop=FALSE]
 
     blastx_freq <- table(blastx$qseqid)
     blastx_freq_cutoff <- blastx_freq[blastx_freq > 1]
@@ -63,7 +63,7 @@ FScanR <- function(blastx_output,
             send_last <- blastx_cutoff_sort[i-1,10]
             qframe_last <- blastx_cutoff_sort[i-1,13]
 
-            if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0 & mismatch < mismatch_cutoff) {
+            if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0) {
                 if (qframe > 0 & qframe_last > 0) {
                     frameStart <- qend_last
                     frameEnd <- qstart
@@ -80,7 +80,7 @@ FScanR <- function(blastx_output,
                 qframe_last <- ifelse(qframe_last %in% c(-3, 3), 0, qframe_last)
                 qframe <- ifelse(qframe %in% c(-3, 3), 0, qframe)
                 FS_type <- qDist + (1 - sDist) * 3
-                if (qDist >= frameDist_cutoff * (-1) & qDist <= frameDist_cutoff & sDist <= floor(frameDist_cutoff/3) & sDist >= floor(frameDist_cutoff/3) * (-1)) {
+                if (abs(qDist) <= frameDist_cutoff & abs(sDist) <= floor(frameDist_cutoff/3)) {
                     prf_sub <- data.frame(as.character(qseqid), frameStart, frameEnd, as.character(sseqid), send_last + 1, sstart, FS_type)
                     prf <- rbind(prf, prf_sub)
                 }
