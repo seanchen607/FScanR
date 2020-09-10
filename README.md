@@ -14,7 +14,7 @@ To acquire the input file with 14 columns in tab-delimited format, which is gene
 
 	-outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qframe sframe'
 
-For details, please visit <https://doi.org/10.1111/1755-0998.13023>.
+For details, please see [Tutorial](https://seanchen607.github.io/FScanR.html).
 
 ## :gear: Install FScanR in R (>= 3.5.0)
 
