@@ -62,6 +62,7 @@ FScanR <- function(blastx_output,
             sstart_last <- blastx_cutoff_sort[i-1,9]
             send_last <- blastx_cutoff_sort[i-1,10]
             qframe_last <- blastx_cutoff_sort[i-1,13]
+            strand <- ""
 
             if (qseqid == qseqid_last & sseqid == sseqid_last & qframe != qframe_last & qframe * qframe_last > 0) {
                 if (qframe > 0 & qframe_last > 0) {
@@ -69,24 +70,26 @@ FScanR <- function(blastx_output,
                     frameEnd <- qstart
                     pepStart <- send_last
                     pepEnd <- sstart
+                    strand <- "+"
                 } else if (qframe < 0 & qframe_last < 0) {
                     frameStart <- qstart_last
                     frameEnd <- qend
                     pepStart <- send
                     pepEnd <- sstart_last
+                    strand <- "-"
                 }
                 qDist <- frameEnd - frameStart - 1
                 sDist <- pepEnd - pepStart
                 FS_type <- qDist + (1 - sDist) * 3
                 if (abs(qDist) <= frameDist_cutoff & abs(sDist) <= floor(frameDist_cutoff/3)) {
-                    prf_sub <- data.frame(as.character(qseqid), frameStart, frameEnd, as.character(sseqid), send_last + 1, sstart, FS_type)
+                    prf_sub <- data.frame(as.character(qseqid), frameStart, frameEnd, as.character(sseqid), send_last + 1, sstart, FS_type, strand)
                     prf <- rbind(prf, prf_sub)
                 }
                 prf <- prf[prf$FS_type < 3 & prf$FS_type > -3,,drop=FALSE]
             }
         }
         if (nrow(prf) > 0) {
-            colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type")
+            colnames(prf) <- c("DNA_seqid", "FS_start", "FS_end", "Pep_seqid", "Pep_FS_start", "Pep_FS_end", "FS_type", "Strand")
             prf$loci1 = paste(prf$DNA_seqid, prf$FS_start, sep="_")
             prf$loci2 = paste(prf$DNA_seqid, prf$FS_end, sep="_")
             prf$loci3 = paste(prf$Pep_seqid, prf$Pep_FS_start, sep="_")
